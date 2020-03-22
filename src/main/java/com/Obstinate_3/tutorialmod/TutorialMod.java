@@ -1,6 +1,7 @@
 package com.Obstinate_3.tutorialmod;
 
 import com.Obstinate_3.tutorialmod.blocks.FirstBlock;
+import com.Obstinate_3.tutorialmod.blocks.FirstBlockContainer;
 import com.Obstinate_3.tutorialmod.blocks.FirstBlockTile;
 import com.Obstinate_3.tutorialmod.blocks.ModBlocks;
 import com.Obstinate_3.tutorialmod.items.FirstItem;
@@ -9,10 +10,13 @@ import com.Obstinate_3.tutorialmod.setup.IProxy;
 import com.Obstinate_3.tutorialmod.setup.ModSetup;
 import com.Obstinate_3.tutorialmod.setup.ServerProxy;
 import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -28,6 +32,8 @@ public class TutorialMod
     public static IProxy proxy = DistExecutor.runForDist(()-> ()-> new ClientProxy(), () -> () -> new ServerProxy());
 
     public static ModSetup setup = new ModSetup();
+
+    public static final String  MODID = "tutorialmod";
 
 
     public TutorialMod() {
@@ -63,6 +69,14 @@ public class TutorialMod
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
             event.getRegistry().register(TileEntityType.Builder.create(FirstBlockTile::new, ModBlocks.FIRSTBLOCK).build(null).setRegistryName("firstblock"));
+        }
+
+        @SubscribeEvent
+        public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
+            event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                return new FirstBlockContainer(windowId, TutorialMod.proxy.getClientWorld(),pos,inv, TutorialMod.proxy.getClientPlayer());
+            }).setRegistryName("firstblock"));
         }
     }
 }
