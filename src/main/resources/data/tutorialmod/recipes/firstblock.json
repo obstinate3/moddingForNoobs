@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    "cqc",
+    "xxx"
+  ],
+  "key": {
+    "x": {
+      "item": "minecraft:cobblestone"
+    },
+    "c": {
+      "item": "minecraft:redstone"
+    },
+    "q": {
+      "tag": "forge:dyes/red"
+    }
+  },
+  "result": {
+    "item": "tutorialmod:firstblock"
+  }
+}
