@@ -4,6 +4,7 @@ import com.Obstinate_3.tutorialmod.blocks.FirstBlock;
 import com.Obstinate_3.tutorialmod.blocks.ModBlocks;
 import com.Obstinate_3.tutorialmod.setup.ClientProxy;
 import com.Obstinate_3.tutorialmod.setup.IProxy;
+import com.Obstinate_3.tutorialmod.setup.ModSetup;
 import com.Obstinate_3.tutorialmod.setup.ServerProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -23,6 +24,9 @@ public class TutorialMod
 
     public static IProxy proxy = DistExecutor.runForDist(()-> ()-> new ClientProxy(), () -> () -> new ServerProxy());
 
+    public static ModSetup setup = new ModSetup();
+
+
     public TutorialMod() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -31,10 +35,9 @@ public class TutorialMod
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
-        // some preinit code
-        proxy.getClientWorld();
+    private void setup(final FMLCommonSetupEvent event) {
+        setup.init();
+        proxy.init();
     }
 
 
@@ -48,7 +51,9 @@ public class TutorialMod
         }
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
-            event.getRegistry().register(new BlockItem(ModBlocks.FIRSTBLOCK, new Item.Properties()).setRegistryName("firstblock"));
+            Item.Properties properties = new Item.Properties()
+                    .group(setup.itemGroup);
+            event.getRegistry().register(new BlockItem(ModBlocks.FIRSTBLOCK, properties).setRegistryName("firstblock"));
         }
     }
 }

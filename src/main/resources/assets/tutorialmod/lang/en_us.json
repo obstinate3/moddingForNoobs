@@ -1,3 +1,5 @@
 {
-  "block.tutorialmod.firstblock": "First Block"
+  "block.tutorialmod.firstblock": "First Block",
+  "_comment": "Creative Tabs",
+  "itemGroup.tutorialmod": "Tutorial Mod"
 }
