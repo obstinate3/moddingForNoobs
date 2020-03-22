@@ -2,6 +2,7 @@ package com.Obstinate_3.tutorialmod;
 
 import com.Obstinate_3.tutorialmod.blocks.FirstBlock;
 import com.Obstinate_3.tutorialmod.blocks.ModBlocks;
+import com.Obstinate_3.tutorialmod.items.FirstItem;
 import com.Obstinate_3.tutorialmod.setup.ClientProxy;
 import com.Obstinate_3.tutorialmod.setup.IProxy;
 import com.Obstinate_3.tutorialmod.setup.ModSetup;
@@ -54,6 +55,7 @@ public class TutorialMod
             Item.Properties properties = new Item.Properties()
                     .group(setup.itemGroup);
             event.getRegistry().register(new BlockItem(ModBlocks.FIRSTBLOCK, properties).setRegistryName("firstblock"));
+            event.getRegistry().register(new FirstItem());
         }
     }
 }
