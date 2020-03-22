@@ -1,6 +1,7 @@
 package com.Obstinate_3.tutorialmod;
 
 import com.Obstinate_3.tutorialmod.blocks.FirstBlock;
+import com.Obstinate_3.tutorialmod.blocks.FirstBlockTile;
 import com.Obstinate_3.tutorialmod.blocks.ModBlocks;
 import com.Obstinate_3.tutorialmod.items.FirstItem;
 import com.Obstinate_3.tutorialmod.setup.ClientProxy;
@@ -10,6 +11,7 @@ import com.Obstinate_3.tutorialmod.setup.ServerProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,7 +50,7 @@ public class TutorialMod
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            event.getRegistry().register(new FirstBlock());
+            event.getRegistry().register(new FirstBlock().setRegistryName("firstblock"));
         }
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
@@ -56,6 +58,11 @@ public class TutorialMod
                     .group(setup.itemGroup);
             event.getRegistry().register(new BlockItem(ModBlocks.FIRSTBLOCK, properties).setRegistryName("firstblock"));
             event.getRegistry().register(new FirstItem());
+        }
+
+        @SubscribeEvent
+        public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
+            event.getRegistry().register(TileEntityType.Builder.create(FirstBlockTile::new, ModBlocks.FIRSTBLOCK).build(null).setRegistryName("firstblock"));
         }
     }
 }
